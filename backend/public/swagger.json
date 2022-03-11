@@ -17,6 +17,22 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"ISignInPayload": {
+				"properties": {
+					"userName": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"userName",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -34,6 +50,54 @@
 		"/ping": {
 			"get": {
 				"operationId": "GetMessage",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PingResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/v1/auth/sign-in": {
+			"post": {
+				"operationId": "SignIn",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PingResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ISignInPayload"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/auth/sign-up": {
+			"get": {
+				"operationId": "SignUp",
 				"responses": {
 					"200": {
 						"description": "Ok",

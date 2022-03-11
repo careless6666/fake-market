@@ -1,8 +1,4 @@
-import { Request, Response } from "express";
-import {Get, Route} from "tsoa";
-import express from "express";
-
-const router = express.Router();
+import {Get, Post, Body, Route} from "tsoa";
 
 interface PingResponse {
     message: string;
@@ -17,15 +13,25 @@ export default class PingController {
         };
     }
 }
-//
-// export const signIn = (req: Request, res: Response) => {
-//     res.render("home", {
-//         title: "Home"
-//     });
-// };
-//
-// export const signUp = (req: Request, res: Response) => {
-//     res.render("home", {
-//         title: "Home"
-//     });
-// };
+
+interface ISignInPayload {
+    userName: string,
+    password: string
+}
+
+@Route("api/v1/auth/")
+export class AuthController {
+    @Post("/sign-in")
+    public async signIn(@Body() body: ISignInPayload): Promise<PingResponse> {
+        return {
+            message: "pong",
+        };
+    }
+
+    @Get("/sign-up")
+    public async signUp(): Promise<PingResponse> {
+        return {
+            message: "pong",
+        };
+    }
+}
