@@ -4,6 +4,13 @@ import swaggerUI = require('swagger-ui-express')
 import morgan from "morgan";
 import cors from 'cors';
 import * as core from "express-serve-static-core";
+import Provider, {AdapterConstructor} from "oidc-provider"
+import configuration from "./auth/authConfiguration";
+import AuthPostgresAdapter from "./auth/authPostgresAdapter";
+const dotenv = require('dotenv');
+const { Client } = require('pg')
+
+dotenv.config();
 
 const app = express();
 const port = 3001;
@@ -17,6 +24,31 @@ AddCors(app);
 app.get('/', (req, res) => {
     res.send('The sedulous hyena ate the antelope!');
 });
+
+const { PORT = 3000, ISSUER = `http://localhost:${PORT}` } = process.env;
+
+(async () => {
+    let adapter;
+    const client = new Client(
+        {
+            host: process.env.PGHOST,
+            user: process.env.PGUSER,
+            password: process.env.PGPASSWORD,
+            database: process.env.PGDATABASE,
+        }
+    )
+    await client.connect()
+    if (process.env.MONGODB_URI) {
+        adapter = require("./adapters/mongodb"); // eslint-disable-line global-require
+        await adapter.connect();
+    }
+
+    adapter = new AuthPostgresAdapter("psql") as unknown as AdapterConstructor;
+
+    const provider = new Provider.Provider(ISSUER, { adapter, ...configuration });
+
+    app.use(provider.callback());
+})()
 
 app.use(
     "/docs",
