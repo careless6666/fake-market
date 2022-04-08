@@ -18,7 +18,8 @@
             "resolveSourceMapLocations": [
                 "${workspaceFolder}/**",
                 "!**/node_modules/**"
-            ]
+            ],
+            "preLaunchTask": "rebuild"
         }
     ]
 }

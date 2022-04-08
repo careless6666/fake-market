@@ -4,31 +4,31 @@ import swaggerUI = require('swagger-ui-express')
 import morgan from "morgan";
 import cors from 'cors';
 import * as core from "express-serve-static-core";
-//const dotenv = require('dotenv');
+const dotenv = require('dotenv');
 
-//dotenv.config();
+dotenv.config({path: './backend/.env'});
 
 const app = express();
 const port = 3001;
 
-//app.use(morgan("tiny"));
-//app.use(express.static("public"));
-//app.use(express.json());
+app.use(morgan("tiny"));
+app.use(express.static("public"));
+app.use(express.json());
 
-//AddCors(app);
+AddCors(app);
 
 app.get('/', (req, res) => {
     res.send('The sedulous hyena ate the antelope!');
 });
 
-/*
+
 
 const { PORT, ISSUER = `http://localhost:${PORT}` } = process.env;
 
 
 
 app.use(
-    "/docs",
+    "/swagger",
     swaggerUI.serve,
     swaggerUI.setup(undefined, {
         swaggerOptions: {
@@ -37,9 +37,7 @@ app.use(
     })
 );
 
-app.use(Router);*/
-
-console.log("new2")
+app.use(Router);
 
 app.listen(port, () => {
     return console.log(`server is listening on ${port}`);
