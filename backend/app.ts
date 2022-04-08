@@ -4,51 +4,28 @@ import swaggerUI = require('swagger-ui-express')
 import morgan from "morgan";
 import cors from 'cors';
 import * as core from "express-serve-static-core";
-import Provider, {AdapterConstructor} from "oidc-provider"
-import configuration from "./auth/authConfiguration";
-import AuthPostgresAdapter from "./auth/authPostgresAdapter";
-const dotenv = require('dotenv');
-const { Client } = require('pg')
+//const dotenv = require('dotenv');
 
-dotenv.config();
+//dotenv.config();
 
 const app = express();
 const port = 3001;
 
-app.use(morgan("tiny"));
-app.use(express.static("public"));
-app.use(express.json());
+//app.use(morgan("tiny"));
+//app.use(express.static("public"));
+//app.use(express.json());
 
-AddCors(app);
+//AddCors(app);
 
 app.get('/', (req, res) => {
     res.send('The sedulous hyena ate the antelope!');
 });
 
-const { PORT = 3000, ISSUER = `http://localhost:${PORT}` } = process.env;
+/*
 
-(async () => {
-    let adapter;
-    const client = new Client(
-        {
-            host: process.env.PGHOST,
-            user: process.env.PGUSER,
-            password: process.env.PGPASSWORD,
-            database: process.env.PGDATABASE,
-        }
-    )
-    await client.connect()
-    if (process.env.MONGODB_URI) {
-        adapter = require("./adapters/mongodb"); // eslint-disable-line global-require
-        await adapter.connect();
-    }
+const { PORT, ISSUER = `http://localhost:${PORT}` } = process.env;
 
-    adapter = new AuthPostgresAdapter("psql") as unknown as AdapterConstructor;
 
-    const provider = new Provider.Provider(ISSUER, { adapter, ...configuration });
-
-    app.use(provider.callback());
-})()
 
 app.use(
     "/docs",
@@ -60,7 +37,9 @@ app.use(
     })
 );
 
-app.use(Router);
+app.use(Router);*/
+
+console.log("new2")
 
 app.listen(port, () => {
     return console.log(`server is listening on ${port}`);

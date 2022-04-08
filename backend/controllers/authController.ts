@@ -15,7 +15,9 @@ export default class PingController {
 }
 
 interface ISignInPayload {
-    userName: string,
+    firstName: string,
+    lastName: string,
+    email: string,
     password: string
 }
 
@@ -30,6 +32,13 @@ export class AuthController {
 
     @Get("/sign-up")
     public async signUp(): Promise<PingResponse> {
+        return {
+            message: "pong",
+        };
+    }
+
+    @Post("/register")
+    public async register(@Body() body: ISignInPayload): Promise<PingResponse> {
         return {
             message: "pong",
         };
