@@ -1,0 +1,12 @@
+version: "3"
+services:
+  fakeMarketDb:
+    image: postgres
+    restart: always
+    container_name: fake_db
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=mysecretpassword"
+      - "POSTGRES_DB=fakeDb"
+    ports:
+      - 1586:5432
