@@ -6,15 +6,15 @@ export class UserInfo {
     @PrimaryGeneratedColumn()
     public id: string | undefined;
 
-    @Column()
+    @Column({ type: 'text', nullable: false })
     public email: string | undefined;
 
-    @Column('first_name')
+    @Column({name: 'first_name', type: 'text', nullable: true})
     public firstName: string| undefined;
 
-    @Column('last_name')
+    @Column({name: 'last_name', type: 'text', nullable: true})
     public lastName: string| undefined;
 
-    @Column()
+    @Column({name: "password", type: 'text', nullable: false})
     public password: string| undefined;
 }
