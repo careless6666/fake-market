@@ -3,8 +3,8 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 @Entity("user")
 export class UserInfo {
 
-    @PrimaryGeneratedColumn()
-    public id: string | undefined;
+    @PrimaryGeneratedColumn({ type: 'bigint' })
+    public id: BigInt = BigInt(0);
 
     @Column({ type: 'text', nullable: false })
     public email: string | undefined;

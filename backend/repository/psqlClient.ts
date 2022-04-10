@@ -1,6 +1,12 @@
 import "reflect-metadata";
 import {UserInfo} from "./model/UserInfo";
 import { DataSource, DataSourceOptions } from "typeorm";
+import { CategoryInfo } from "./model/categoryInfo";
+import { CartInfo, CartItemsInfo } from "./model/cartInfo";
+import { OrderInfo, OrderItemInfo } from "./model/orderInfo";
+import { PaymentInfo } from "./model/paymentInfo";
+import { ProductInfo } from "./model/productInfo";
+import { StockInfo } from "./model/stockInfo";
 
 let _dataSource: DataSource | undefined = undefined;
 
@@ -14,10 +20,10 @@ const getDataSource = (): DataSource => {
         username: process.env.PGUSER,
         password: process.env.PGPASSWORD,
         database: process.env.PGDATABASE,
-        migrationsRun: false,
+        migrationsRun: true,
         logging: true,
         synchronize: true,
-        entities: [UserInfo],
+        entities: [UserInfo, CategoryInfo, CartInfo, CartItemsInfo, CategoryInfo, OrderInfo, OrderItemInfo, PaymentInfo, ProductInfo, StockInfo],
     }
 
     if(!_dataSource){
@@ -39,7 +45,7 @@ const getDataSourceMigration = (): DataSource => {
         database: "fakeDb",
         logging: true,
         synchronize: true,
-        entities: [UserInfo],
+        entities: [UserInfo, CategoryInfo, CartInfo, CartItemsInfo, CategoryInfo, OrderInfo, OrderItemInfo, PaymentInfo, ProductInfo, StockInfo],
     }
 
     if(!_dataSource){
