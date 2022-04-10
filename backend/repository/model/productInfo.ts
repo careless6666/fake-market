@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from "typeorm";
 import { CategoryInfo } from "./categoryInfo";
+import { StockInfo } from "./stockInfo";
 
 @Entity("product")
 export class ProductInfo {
@@ -10,9 +11,9 @@ export class ProductInfo {
     @Column({ type: 'text', nullable: false })
     public name: string | undefined;
 
-    @ManyToOne(() => CategoryInfo, (category) => category.id)
-    @Column({name: 'category_id', type: 'text', nullable: true})
-    public categoryId: BigInt = BigInt(0);
+    @ManyToOne(() => CategoryInfo, (category) => category.product)
+    @JoinColumn({ name: "category_id" })
+    public category: CategoryInfo;
 
     @Column({ type: 'text', nullable: false })
     public description: string | undefined;
@@ -22,4 +23,7 @@ export class ProductInfo {
 
     @Column({ type: 'int', nullable: false })
     public price: number = 0;
+
+    @OneToOne(()=> StockInfo, (stock) => stock.product)
+    public stock: StockInfo;
 }

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn, OneToOne } from "typeorm";
+import { PaymentInfo } from "./paymentInfo";
 import { ProductInfo } from "./productInfo";
 
 @Entity("order")
@@ -19,8 +20,11 @@ export class OrderInfo {
     @Column({ name: 'updated_at',type: 'timestamp with time zone', nullable: false })
     public updatedAt: Date = new Date();
 
-    @OneToMany((type) => ProductInfo, (product) => product.id)
-    orderItems: ProductInfo[]
+    @OneToMany(() => OrderItemInfo, (order) => order.order)
+    orderItems: OrderItemInfo[]
+
+    @OneToMany(()=> PaymentInfo, (payment) => payment.order)
+    payment: PaymentInfo[]
 }
 
 @Entity("order_item")
@@ -28,9 +32,9 @@ export class OrderItemInfo {
     @PrimaryGeneratedColumn()
     public id: BigInt = BigInt(0);
 
-    @ManyToOne(() => OrderInfo, (order) => order.id)
-    @Column({ name: 'order_id', type: 'bigint', nullable: false })
-    public orderId: BigInt = BigInt(0);
+    @ManyToOne(() => OrderInfo, (order) => order.orderItems)
+    @JoinColumn({ name: "order_id" })
+    public order: OrderInfo;
 
     @Column({ name: 'product_id',type: 'bigint', nullable: false })
     public productId: BigInt = BigInt(0);

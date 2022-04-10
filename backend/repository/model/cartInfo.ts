@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("cart")
 export class CartInfo {
@@ -9,8 +9,8 @@ export class CartInfo {
     @Column({ name: 'user_id',type: 'bigint', nullable: false })
     public userId: BigInt = BigInt(0);
 
-    @OneToMany((type) => CartItemsInfo, (item) => item.id)
-    orderItems: CartItemsInfo[]
+    @OneToMany(() => CartItemsInfo, (item) => item.id)
+    cartItems: CartItemsInfo[]
 }
 
 @Entity("cart_items")
@@ -19,9 +19,9 @@ export class CartItemsInfo {
     @PrimaryGeneratedColumn()
     public id: BigInt = BigInt(0);
 
-    @ManyToOne(() => CartInfo, (cart) => cart.id)
-    @Column({ name: 'cart_id',type: 'bigint', nullable: false })
-    public cartId: BigInt = BigInt(0);
+    @ManyToOne(() => CartInfo, (cart) => cart.cartItems)
+    @JoinColumn({ name: "cart_id" })
+    public cart: CartInfo;
 
     @Column({ name: 'product_id',type: 'bigint', nullable: false })
     public productId: BigInt = BigInt(0);
