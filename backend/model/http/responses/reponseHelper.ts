@@ -30,6 +30,13 @@ export class ReponseHelper {
         }
     }
 
+    public static createSuccessEmpty() {
+        return {
+            data: null,
+            error: null
+        }
+    }
+
     public static safeCall = (res: any, callback: CallbackFunction)=>{
         try {
             var response = callback()
