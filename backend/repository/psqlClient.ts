@@ -20,9 +20,9 @@ const getDataSource = (): DataSource => {
         username: process.env.PGUSER,
         password: process.env.PGPASSWORD,
         database: process.env.PGDATABASE,
-        migrationsRun: true,
+        migrationsRun: false,
         logging: true,
-        synchronize: true,
+        synchronize: false,
         entities: [UserInfo, CategoryInfo, CartInfo, CartItemsInfo, CategoryInfo, OrderInfo, OrderItemInfo, PaymentInfo, ProductInfo, StockInfo],
     }
 
