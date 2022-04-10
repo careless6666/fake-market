@@ -19,13 +19,19 @@ export class AuthController {
 
         try {
 
-            var userRepository = ds.getRepository(UserInfo)
-
+            /*var userRepository = ds.getRepository(UserInfo)
+            
             const userInfo = await userRepository.findOne({
                 where: {
                     email: body.email
                 }
-            });
+            });*/
+
+            const userInfo = await ds
+                .getRepository(UserInfo)
+                .createQueryBuilder("user")
+                .where("user.email = :email", { email: body.email })
+                .getOne()            
 
             if(!userInfo){
                 return ReponseHelper.createError("User not found, please sign up");
@@ -66,11 +72,11 @@ export class AuthController {
 
             var userRepository = ds.getRepository(UserInfo)
 
-            const userInfo = await userRepository.findOne({
-                where: {
-                    email: body.email
-                }
-            });
+            const userInfo = await ds
+                .getRepository(UserInfo)
+                .createQueryBuilder("user")
+                .where("user.email = :email", { email: body.email })
+                .getOne()
 
             if (userInfo) {
                 return ReponseHelper.createError("User Already Exist. Please Login");

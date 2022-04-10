@@ -1,3 +1,5 @@
+import { ClientError } from "../../../Exceptions/clientErrors";
+
 export interface Error {
     message: string
     details: string | null
@@ -41,7 +43,13 @@ export class ReponseHelper {
         try {
             var response = await callback()
             res.status(200).json(response);
-        } catch(e: any){
+        } 
+        catch(e: any){
+            if(e instanceof ClientError){
+                res.status(200).json(ReponseHelper.createError(e.message));
+                return;
+            }
+
             res.status(500).json(ReponseHelper.createError(e.toString()));
         }
     }

@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import * as Joi from 'joi'
 
 export const auth = {
     signUp: Joi.object({
@@ -17,17 +17,14 @@ export const auth = {
     })
 }
 
-export function validateRequest(req: any, next:any, schema:any) {
+export function validateRequest(req: any, schema:any): string | undefined {
     const options = {
         abortEarly: false, // include all errors
         allowUnknown: true, // ignore unknown props
         stripUnknown: true // remove unknown props
     };
-    const { error, value } = schema.validate(req.body, options);
+    const { error, value } = schema.validate(req, options);
     if (error) {
-        next(`Validation error: ${error.details.map((x: any) => x.message).join(', ')}`);
-    } else {
-        //req.body = value;
-        //next();
+        return `Validation error: ${error.details.map((x: any) => x.message).join(', ')}`
     }
 }

@@ -4,30 +4,35 @@ import { AuthController } from "../controllers/authController";
 import { validateRequest, auth as authValidation } from "../validation/auth"
 import { ISignInPayload, ISignUpPayload } from "../model/http/requests/authRequests";
 import { ReponseHelper } from "../model/http/responses/reponseHelper";
-
+import { ClientError } from "../Exceptions/clientErrors";
 
 const router = express.Router();
 
-router.post('/sign-up', (req, res, next) => {
-
-    ReponseHelper.safeCallAsync(res, async()=> {
+router.post('/sign-up',
+    (req, res) => {
+    ReponseHelper.safeCallAsync(res, async () => {
         const body = req.body as ISignUpPayload;
 
-        validateRequest(req, next, authValidation.signUp)
+        const invalidResult = validateRequest(req, authValidation.signUp);
+        if(invalidResult) 
+            throw new ClientError(invalidResult);
 
         return new AuthController().signUp(body)
     })
 })
 
-router.post("/sign-in", async (req, res, next) => { 
-    ReponseHelper.safeCallAsync(res, async()=> {
-        const body = req.body as ISignInPayload;
+router.post("/sign-in",
+    async (req, res) => {
+        ReponseHelper.safeCallAsync(res , async () => {
+            const body = req.body as ISignInPayload;
 
-        validateRequest(req, next, authValidation.signIn)
+            const invalidResult = validateRequest(req, authValidation.signIn);
+            if(invalidResult) 
+                throw new ClientError(invalidResult);
 
-        return new AuthController().signIn(body)
-    })
-});
+            return new AuthController().signIn(body)
+        })
+    });
 
 
 export default router
