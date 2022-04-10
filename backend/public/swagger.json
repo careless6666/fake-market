@@ -6,43 +6,7 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"PingResponse": {
-				"properties": {
-					"message": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ISignInPayload": {
-				"properties": {
-					"firstName": {
-						"type": "string"
-					},
-					"lastName": {
-						"type": "string"
-					},
-					"email": {
-						"type": "string"
-					},
-					"password": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"firstName",
-					"lastName",
-					"email",
-					"password"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"User": {
+			"LoginResult": {
 				"properties": {
 					"firstName": {
 						"type": "string"
@@ -83,6 +47,72 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"BaseResponse_LoginResult_": {
+				"properties": {
+					"data": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/LoginResult"
+							}
+						],
+						"nullable": true
+					},
+					"error": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Error"
+							}
+						],
+						"nullable": true
+					}
+				},
+				"required": [
+					"data",
+					"error"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ISignInPayload": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"User": {
+				"properties": {
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"token": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"firstName",
+					"lastName",
+					"email",
+					"token"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"BaseResponse_User_": {
 				"properties": {
 					"data": {
@@ -108,6 +138,30 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"ISignUpPayload": {
+				"properties": {
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"firstName",
+					"lastName",
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -122,25 +176,6 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/ping": {
-			"get": {
-				"operationId": "GetMessage",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/PingResponse"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
 		"/api/v1/auth/sign-in": {
 			"post": {
 				"operationId": "SignIn",
@@ -150,7 +185,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/PingResponse"
+									"$ref": "#/components/schemas/BaseResponse_LoginResult_"
 								}
 							}
 						}
@@ -171,27 +206,8 @@
 			}
 		},
 		"/api/v1/auth/sign-up": {
-			"get": {
-				"operationId": "SignUp",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/PingResponse"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/api/v1/auth/register": {
 			"post": {
-				"operationId": "Register",
+				"operationId": "SignUp",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -211,7 +227,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/ISignInPayload"
+								"$ref": "#/components/schemas/ISignUpPayload"
 							}
 						}
 					}

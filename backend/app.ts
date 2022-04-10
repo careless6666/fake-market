@@ -5,7 +5,6 @@ import morgan from "morgan";
 import cors from 'cors';
 import * as core from "express-serve-static-core";
 const dotenv = require('dotenv');
-import { logErrors } from "./middleware/logErrors";
 
 dotenv.config({path: './backend/.env'});
 
@@ -15,7 +14,6 @@ const port = 3001;
 app.use(morgan("tiny"));
 app.use(express.static("public"));
 app.use(express.json());
-app.use(logErrors)
 
 AddCors(app);
 

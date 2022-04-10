@@ -1,79 +1,69 @@
 import { Get, Post, Body, Route } from "tsoa";
-import { validateRequest, auth } from "../validation/auth"
 import { dataSourceLazy } from "../repository/psqlClient";
 import { UserInfo } from "../repository/model/UserInfo";
 import bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { User } from '../model/user'
-import { ISignInPayload } from "../model/http/requests/authRequests";
+import { BaseResponse, ReponseHelper } from "../model/http/responses/reponseHelper"
+import { ISignInPayload, ISignUpPayload } from "../model/http/requests/authRequests";
+import { LoginResult } from "../model/http/responses/loginResult";
 
-interface PingResponse {
-    message: string;
-}
-
-interface Error {
-    message: string
-    details: string | null
-}
-
-interface BaseResponse<T> {
-    data: T | null,
-    error: Error | null
-}
-
-export class ReponseHelper {
-    public static createError(message: string, details: string | null = null) {
-        return {
-            data: null,
-            error: {
-                message,
-                details
-            }
-        }
-    }
-
-    public static createSuccess<T>(data: T) {
-        return {
-            data: data,
-            error: null
-        }
-    }
-}
-
-
-@Route("ping")
-export default class PingController {
-    @Get("/")
-    public async getMessage(): Promise<PingResponse> {
-        return {
-            message: "pong",
-        };
-    }
-}
+const TokenKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJS+6HbYvOCR8186CXHHqlg9o/Txhlo0dsAfHDw258wAKSuuOELsCCUyPakWKStKzF5D/NGtl7VpvfAG/7s9oBAlaXyO//s4SznsttaanmvGLDj1kuJpqEi/J55GzWGprPXQrWCmUDGxE+pDci6yMdqSjVJh0Xq+HKzCven4YuwIDAQAB'
 
 @Route("api/v1/auth/")
 export class AuthController {
     @Post("/sign-in")
-    public async signIn(@Body() body: ISignInPayload): Promise<PingResponse> {
-        return {
-            message: "pong",
-        };
-    }
+    public async signIn(@Body() body: ISignInPayload): Promise<BaseResponse<LoginResult>> {
 
-    @Get("/sign-up")
-    public async signUp(): Promise<PingResponse> {
-        return {
-            message: "pong",
-        };
-    }
-
-    @Post("/register")
-    public async register(@Body() body: ISignInPayload): Promise<BaseResponse<User>> {
-        
         var ds = await dataSourceLazy().initialize();
 
         try {
-            
+
+            var userRepository = ds.getRepository(UserInfo)
+
+            const userInfo = await userRepository.findOne({
+                where: {
+                    email: body.email
+                }
+            });
+
+            if(!userInfo){
+                return ReponseHelper.createError("User not found, please sign up");
+            }
+
+            if (userInfo && (await bcrypt.compare(body.password, userInfo?.password ?? ''))) {
+                const token = jwt.sign(
+                    { user_id: userInfo.id, email: userInfo.email},
+                    TokenKey,
+                    {
+                        expiresIn: "6h",
+                    }
+                );
+    
+                return ReponseHelper.createSuccess({
+                    email: userInfo.email ?? '',
+                    firstName: userInfo.firstName ?? '',
+                    lastName: userInfo.lastName ?? '',
+                    token: token
+                });
+            }
+
+            return ReponseHelper.createError("Invalid Credentials");
+        }
+        catch (e) {
+            return ReponseHelper.createError((e as any).toString());
+        } finally {
+            await ds.destroy();
+        }
+    }
+
+    @Post("/sign-up")
+    public async signUp(@Body() body: ISignUpPayload): Promise<BaseResponse<User>> {
+
+        var ds = await dataSourceLazy().initialize();
+
+        try {
+
             var userRepository = ds.getRepository(UserInfo)
 
             const userInfo = await userRepository.findOne({
@@ -98,14 +88,14 @@ export class AuthController {
 
             const token = jwt.sign(
                 { user_id: newUserInfo.id, email: body.email },
-                process.env.TOKEN_KEY ? process.env.TOKEN_KEY : '',
-                { expiresIn: "2h" }
+                TokenKey,
+                { expiresIn: "6h" }
             );
 
             const user: User = {
-                firstName: newUserInfo.firstName ? newUserInfo.firstName : '',
-                lastName: newUserInfo.lastName ? newUserInfo.lastName : '',
-                email: newUserInfo.email ? newUserInfo.email : '',
+                firstName: newUserInfo.firstName ?? '',
+                lastName: newUserInfo.lastName ?? '',
+                email: newUserInfo.email ?? '',
                 token: token
             }
 

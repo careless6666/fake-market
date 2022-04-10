@@ -2,31 +2,32 @@ import express from "express";
 const auth = require("../middleware/auth");
 import { AuthController } from "../controllers/authController";
 import { validateRequest, auth as authValidation } from "../validation/auth"
-import { ISignInPayload } from "../model/http/requests/authRequests";
+import { ISignInPayload, ISignUpPayload } from "../model/http/requests/authRequests";
+import { ReponseHelper } from "../model/http/responses/reponseHelper";
 
 
 const router = express.Router();
 
-router.post('/register', async (req, res, next) => {
-    
-    const { firstName, lastName, email, password } = req.body;
+router.post('/sign-up', (req, res, next) => {
 
-    const body: ISignInPayload = {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password
-    } 
+    ReponseHelper.safeCallAsync(res, async()=> {
+        const body = req.body as ISignUpPayload;
 
-    validateRequest(req, next, authValidation.register)
+        validateRequest(req, next, authValidation.signUp)
 
-    var response = await new AuthController().register(body)
-    //throw new Error('jopa')
-
-    res.status(200).json(response);
+        return new AuthController().signUp(body)
+    })
 })
 
-router.post("/login", async (req, res) => { });
+router.post("/sign-in", async (req, res, next) => { 
+    ReponseHelper.safeCallAsync(res, async()=> {
+        const body = req.body as ISignInPayload;
+
+        validateRequest(req, next, authValidation.signIn)
+
+        return new AuthController().signIn(body)
+    })
+});
 
 
 export default router
