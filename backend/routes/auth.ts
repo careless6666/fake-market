@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post('/sign-up',
     (req, res) => {
-    ReponseHelper.safeCallAsync(res, async () => {
+    ReponseHelper.safeCallAsync(res, () => {
         const body = req.body as ISignUpPayload;
 
         const invalidResult = validateRequest(req, authValidation.signUp);
@@ -22,8 +22,8 @@ router.post('/sign-up',
 })
 
 router.post("/sign-in",
-    async (req, res) => {
-        ReponseHelper.safeCallAsync(res , async () => {
+    (req, res) => {
+        ReponseHelper.safeCallAsync(res , () => {
             const body = req.body as ISignInPayload;
 
             const invalidResult = validateRequest(req, authValidation.signIn);
