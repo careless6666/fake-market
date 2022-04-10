@@ -46,6 +46,9 @@ const getDataSourceMigration = (): DataSource => {
         logging: true,
         synchronize: true,
         entities: [UserInfo, CategoryInfo, CartInfo, CartItemsInfo, CategoryInfo, OrderInfo, OrderItemInfo, PaymentInfo, ProductInfo, StockInfo],
+        migrations: [
+            "repository/migrations/**/*.ts"
+        ]
     }
 
     if(!_dataSource){
