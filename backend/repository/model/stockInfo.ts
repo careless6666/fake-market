@@ -5,12 +5,12 @@ import { ProductInfo } from "./productInfo";
 export class StockInfo {
 
     @PrimaryGeneratedColumn()
-    public id: bigint = BigInt(0);
+    public id: string;
 
     @ManyToOne(() => ProductInfo, (product) => product.stock)
     @JoinColumn({ name: "product_id" })
     public product: ProductInfo;
 
     @Column({name: 'quantity', type: 'bigint', nullable: true})
-    public quantity: bigint = BigInt(0);
+    public quantity: string;
 }

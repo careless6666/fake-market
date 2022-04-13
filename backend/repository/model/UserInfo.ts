@@ -4,7 +4,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 export class UserInfo {
 
     @PrimaryGeneratedColumn({ type: 'bigint' })
-    public id: BigInt = BigInt(0);
+    public id: string;
 
     @Column({ type: 'text', nullable: false })
     public email: string | undefined;

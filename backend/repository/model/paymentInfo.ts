@@ -5,7 +5,7 @@ import { ProductInfo } from "./productInfo";
 @Entity("payment")
 export class PaymentInfo {
     @PrimaryGeneratedColumn()
-    public id: BigInt = BigInt(0);
+    public id: string;
 
     @ManyToOne(() => OrderInfo, (order) => order.payment)
     @JoinColumn({ name: "order_id" })

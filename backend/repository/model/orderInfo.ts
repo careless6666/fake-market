@@ -30,14 +30,14 @@ export class OrderInfo {
 @Entity("order_item")
 export class OrderItemInfo {
     @PrimaryGeneratedColumn()
-    public id: BigInt = BigInt(0);
+    public id: string;
 
     @ManyToOne(() => OrderInfo, (order) => order.orderItems)
     @JoinColumn({ name: "order_id" })
     public order: OrderInfo;
 
     @Column({ name: 'product_id',type: 'bigint', nullable: false })
-    public productId: BigInt = BigInt(0);
+    public productId: string;
 
     @Column({ name: 'quantity',type: 'int', nullable: false })
     public quantity: number = 0;

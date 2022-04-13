@@ -6,7 +6,7 @@ import { StockInfo } from "./stockInfo";
 export class ProductInfo {
 
     @PrimaryGeneratedColumn()
-    public id: BigInt = BigInt(0);
+    public id: string;
 
     @Column({ type: 'text', nullable: false })
     public name: string | undefined;

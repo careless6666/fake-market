@@ -6,10 +6,13 @@ import { ProductInfo } from "./productInfo";
 export class CategoryInfo {
 
     @PrimaryGeneratedColumn()
-    public id: BigInt = BigInt(0);
+    public id: string;
 
     @Column({ type: 'text', nullable: false })
     public name: string | undefined;
+
+    @Column({ type: 'text', nullable: true })
+    public image: string | undefined;
 
     @Column({name: 'parent_id', type: 'bigint', nullable: true})
     public parentId: number = 0;

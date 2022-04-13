@@ -4,10 +4,10 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 export class CartInfo {
 
     @PrimaryGeneratedColumn()
-    public id: BigInt = BigInt(0);
+    public id: string;
 
     @Column({ name: 'user_id',type: 'bigint', nullable: false })
-    public userId: BigInt = BigInt(0);
+    public userId: string;
 
     @OneToMany(() => CartItemsInfo, (item) => item.id)
     cartItems: CartItemsInfo[]
@@ -17,14 +17,14 @@ export class CartInfo {
 export class CartItemsInfo {
 
     @PrimaryGeneratedColumn()
-    public id: BigInt = BigInt(0);
+    public id: string;
 
     @ManyToOne(() => CartInfo, (cart) => cart.cartItems)
     @JoinColumn({ name: "cart_id" })
     public cart: CartInfo;
 
     @Column({ name: 'product_id',type: 'bigint', nullable: false })
-    public productId: BigInt = BigInt(0);
+    public productId: string;
 
     @Column({ name: 'quantity',type: 'int', nullable: false })
     public quantity: number = 0;
