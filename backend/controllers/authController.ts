@@ -7,6 +7,8 @@ import { User } from '../model/user'
 import { BaseResponse, ReponseHelper } from "../model/http/responses/reponseHelper"
 import { ISignInPayload, ISignUpPayload } from "../model/http/requests/authRequests";
 import { LoginResult } from "../model/http/responses/loginResult";
+import { validateRequest, auth as authValidation } from "../validation/auth";
+import { ClientError } from "../Exceptions/clientErrors";
 
 const TokenKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJS+6HbYvOCR8186CXHHqlg9o/Txhlo0dsAfHDw258wAKSuuOELsCCUyPakWKStKzF5D/NGtl7VpvfAG/7s9oBAlaXyO//s4SznsttaanmvGLDj1kuJpqEi/J55GzWGprPXQrWCmUDGxE+pDci6yMdqSjVJh0Xq+HKzCven4YuwIDAQAB'
 
@@ -14,6 +16,10 @@ const TokenKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJS+6HbYvOCR8186CXHHqlg
 export class AuthController {
     @Post("/sign-in")
     public async signIn(@Body() body: ISignInPayload): Promise<BaseResponse<LoginResult>> {
+
+        const invalidResult = validateRequest(body, authValidation.signUp);
+        if(invalidResult) 
+            throw new ClientError(invalidResult);
 
         var ds = await dataSourceLazy().initialize();
 
@@ -65,6 +71,10 @@ export class AuthController {
 
     @Post("/sign-up")
     public async signUp(@Body() body: ISignUpPayload): Promise<BaseResponse<User>> {
+
+        const invalidResult = validateRequest(body, authValidation.signIn);
+        if(invalidResult) 
+            throw new ClientError(invalidResult);
 
         var ds = await dataSourceLazy().initialize();
 

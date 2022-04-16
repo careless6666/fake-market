@@ -15,11 +15,11 @@ const getDataSource = (): DataSource => {
     const options: DataSourceOptions = {
         name: "postgres",
         type: "postgres",
-        host: process.env.PGHOST,
-        port: (process.env.PGPORT ? process.env.PGPORT : 5432) as number,
-        username: process.env.PGUSER,
-        password: process.env.PGPASSWORD,
-        database: process.env.PGDATABASE,
+        host: 'localhost',
+        port: 1586,
+        username: 'postgres',
+        password: 'mysecretpassword',
+        database: 'fakeDb',
         migrationsRun: false,
         logging: true,
         synchronize: false,
@@ -33,6 +33,7 @@ const getDataSource = (): DataSource => {
     return _dataSource;
 }
 
+/*
 const getDataSourceMigration = (): DataSource => {
 
     const options: DataSourceOptions = {
@@ -46,9 +47,9 @@ const getDataSourceMigration = (): DataSource => {
         logging: true,
         synchronize: true,
         entities: [UserInfo, CategoryInfo, CartInfo, CartItemsInfo, CategoryInfo, OrderInfo, OrderItemInfo, PaymentInfo, ProductInfo, StockInfo],
-        migrations: [
-            "repository/migrations/**/*.ts"
-        ]
+        migrations: [*/
+     //       "repository/migrations/**/*.ts"
+     /*   ]
     }
 
     if(!_dataSource){
@@ -57,7 +58,8 @@ const getDataSourceMigration = (): DataSource => {
 
     return _dataSource;
 }
+*/
 
 export const dataSourceLazy = getDataSource
 
-export const dataSource = getDataSourceMigration()
+//export const dataSource = getDataSourceMigration()

@@ -162,6 +162,40 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"BaseResponse_null_": {
+				"properties": {
+					"data": {
+						"anyOf": [],
+						"nullable": true
+					},
+					"error": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/Error"
+							}
+						],
+						"nullable": true
+					}
+				},
+				"required": [
+					"data",
+					"error"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ICreateCategoryRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -228,6 +262,35 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/ISignUpPayload"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/category/create": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BaseResponse_null_"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ICreateCategoryRequest"
 							}
 						}
 					}

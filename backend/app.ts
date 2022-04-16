@@ -1,9 +1,9 @@
 import express from 'express';
-import Router from "./routes";
 import swaggerUI = require('swagger-ui-express')
 import morgan from "morgan";
 import cors from 'cors';
 import * as core from "express-serve-static-core";
+import { RegisterRoutes } from './controllers/routes';
 const dotenv = require('dotenv');
 
 dotenv.config({path: './backend/.env'});
@@ -22,10 +22,9 @@ app.get('/', (req, res) => {
 });
 
 
-
 const { PORT, ISSUER = `http://localhost:${PORT}` } = process.env;
 
-
+RegisterRoutes(app)
 
 app.use(
     "/swagger",
@@ -36,8 +35,6 @@ app.use(
         },
     })
 );
-
-app.use(Router);
 
 app.listen(port, () => {
     return console.log(`server is listening on ${port}`);
