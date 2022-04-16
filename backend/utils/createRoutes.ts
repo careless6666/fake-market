@@ -5,6 +5,7 @@ import { ExtendedRoutesConfig, generateRoutes } from "tsoa";
         basePath: "/",
         routesDir: "./controllers",
         entryFile: "./app.ts",
+        controllerPathGlobs: ['./controllers/**/*.ts'],
         noImplicitAdditionalProperties: "throw-on-extras"
 
     }
