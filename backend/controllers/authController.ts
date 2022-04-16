@@ -72,6 +72,10 @@ export class AuthController {
     @Post("/sign-up")
     public async signUp(@Body() body: ISignUpPayload): Promise<BaseResponse<User>> {
 
+        const invalidResult = validateRequest(body, authValidation.signIn);
+        if(invalidResult) 
+            throw new ClientError(invalidResult);
+
         var ds = await dataSourceLazy().initialize();
 
         try {
