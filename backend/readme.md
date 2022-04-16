@@ -3,3 +3,6 @@ Add migration
 
 Run migration
 ./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:run "./repository/migrations"  -d "./repository/psqlClient.ts"
+
+Run migration
+npm run typeorm migration:run
