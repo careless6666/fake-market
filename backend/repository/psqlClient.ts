@@ -33,33 +33,4 @@ const getDataSource = (): DataSource => {
     return _dataSource;
 }
 
-/*
-const getDataSourceMigration = (): DataSource => {
-
-    const options: DataSourceOptions = {
-        name: "postgres",
-        type: "postgres",
-        host: "localhost",
-        port: 1586,
-        username: "postgres",
-        password: "mysecretpassword",
-        database: "fakeDb",
-        logging: true,
-        synchronize: true,
-        entities: [UserInfo, CategoryInfo, CartInfo, CartItemsInfo, CategoryInfo, OrderInfo, OrderItemInfo, PaymentInfo, ProductInfo, StockInfo],
-        migrations: [*/
-     //       "repository/migrations/**/*.ts"
-     /*   ]
-    }
-
-    if(!_dataSource){
-        _dataSource = new DataSource(options)
-    }
-
-    return _dataSource;
-}
-*/
-
 export const dataSourceLazy = getDataSource
-
-//export const dataSource = getDataSourceMigration()
