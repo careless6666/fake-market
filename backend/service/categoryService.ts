@@ -36,6 +36,7 @@ export class CategoryService {
     }
 
     public list = async (): Promise<CategoryItems> => {
+        
         var ds = await dataSourceLazy().initialize();
 
         var result = {} as  CategoryItems;
