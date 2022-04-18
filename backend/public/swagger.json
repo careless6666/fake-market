@@ -262,32 +262,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"ICategoryListRequest": {
-				"properties": {
-					"parentIds": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"name": {
-						"type": "string"
-					},
-					"ids": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"parentIds",
-					"name",
-					"ids"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"ProductItem": {
 				"properties": {
 					"id": {
@@ -481,7 +455,7 @@
 			}
 		},
 		"/api/v1/category/list": {
-			"post": {
+			"get": {
 				"operationId": "List",
 				"responses": {
 					"200": {
@@ -496,17 +470,7 @@
 					}
 				},
 				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ICategoryListRequest"
-							}
-						}
-					}
-				}
+				"parameters": []
 			}
 		},
 		"/v1/product/query": {

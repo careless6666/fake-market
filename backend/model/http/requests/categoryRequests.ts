@@ -1,9 +1,9 @@
 export interface ICreateCategoryRequest {
-    name: string;
+  name: string;
 }
 
 export interface ICategoryListRequest {
-    parentIds: string[];
-    name: string;
-    ids: string[];
+  parentIds?: string[];
+  name?: string;
+  ids?: string[];
 }
