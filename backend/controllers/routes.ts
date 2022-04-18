@@ -105,6 +105,7 @@ const models: TsoaRoute.Models = {
             "id": {"dataType":"string","required":true},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
+            "alias": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -170,10 +171,10 @@ const models: TsoaRoute.Models = {
     "IProductQueryRequest": {
         "dataType": "refObject",
         "properties": {
-            "id": {"dataType":"string","required":true},
-            "name": {"dataType":"string","required":true},
-            "categoryId": {"dataType":"string","required":true},
-            "limit": {"dataType":"double","required":true},
+            "id": {"dataType":"string"},
+            "name": {"dataType":"string"},
+            "categoryId": {"dataType":"string"},
+            "limit": {"dataType":"integer","required":true,"validators":{"isInt":{"errorMsg":"Invalid float error message."},"minimum":{"value":0}}},
             "offset": {"dataType":"double","required":true},
         },
         "additionalProperties": false,

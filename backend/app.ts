@@ -4,6 +4,7 @@ import morgan from "morgan";
 import cors from 'cors';
 import * as core from "express-serve-static-core";
 import { RegisterRoutes } from './controllers/routes';
+import { addValidationErrorMiddleware } from './middleware/validationErrors';
 const dotenv = require('dotenv');
 
 dotenv.config({path: './backend/.env'});
@@ -24,7 +25,8 @@ app.get('/', (req, res) => {
 
 const { PORT, ISSUER = `http://localhost:${PORT}` } = process.env;
 
-RegisterRoutes(app)
+RegisterRoutes(app);
+addValidationErrorMiddleware(app);
 
 app.use(
     "/swagger",
@@ -56,3 +58,4 @@ function AddCors(app: core.Express) {
 
     app.use(cors(corsOpts));
 }
+

@@ -325,29 +325,13 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"ProductItems": {
+			"BaseResponse_ProductItem-Array_": {
 				"properties": {
-					"items": {
+					"data": {
 						"items": {
 							"$ref": "#/components/schemas/ProductItem"
 						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"items"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"BaseResponse_ProductItems_": {
-				"properties": {
-					"data": {
-						"allOf": [
-							{
-								"$ref": "#/components/schemas/ProductItems"
-							}
-						],
+						"type": "array",
 						"nullable": true
 					},
 					"error": {
@@ -378,18 +362,18 @@
 						"type": "string"
 					},
 					"limit": {
-						"type": "number",
-						"format": "double"
+						"type": "integer",
+						"format": "int32",
+						"default": "100",
+						"minimum": 0
 					},
 					"offset": {
-						"type": "number",
-						"format": "double"
+						"type": "integer",
+						"format": "int32",
+						"minimum": 0
 					}
 				},
 				"required": [
-					"id",
-					"name",
-					"categoryId",
 					"limit",
 					"offset"
 				],
@@ -534,7 +518,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/BaseResponse_ProductItems_"
+									"$ref": "#/components/schemas/BaseResponse_ProductItem-Array_"
 								}
 							}
 						}

@@ -7,6 +7,3 @@ export interface ProductItem {
     photo: string
     price: number
 }
-export interface ProductItems {
-    items: ProductItem[]
-}

@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { OrderItemInfo } from "./orderInfo";
 import { ProductInfo } from "./productInfo";
 
 @Entity("category")
