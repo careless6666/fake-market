@@ -207,12 +207,16 @@
 					},
 					"image": {
 						"type": "string"
+					},
+					"alias": {
+						"type": "string"
 					}
 				},
 				"required": [
 					"id",
 					"name",
-					"image"
+					"image",
+					"alias"
 				],
 				"type": "object",
 				"additionalProperties": false
