@@ -463,7 +463,7 @@
 				}
 			}
 		},
-		"/v1/category/create": {
+		"/api/v1/category/create": {
 			"post": {
 				"operationId": "Create",
 				"responses": {
@@ -492,7 +492,7 @@
 				}
 			}
 		},
-		"/v1/category/list": {
+		"/api/v1/category/list": {
 			"post": {
 				"operationId": "List",
 				"responses": {
