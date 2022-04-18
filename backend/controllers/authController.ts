@@ -1,4 +1,4 @@
-import { Get, Post, Body, Route } from "tsoa";
+import { Get, Post, Body, Route, Request } from "tsoa";
 import { dataSourceLazy } from "../repository/psqlClient";
 import { UserInfo } from "../repository/model/UserInfo";
 import bcrypt from "bcryptjs";
@@ -7,13 +7,15 @@ import { User } from '../model/user'
 import { BaseResponse, ReponseHelper } from "../model/http/responses/reponseHelper"
 import { ISignInPayload, ISignUpPayload } from "../model/http/requests/authRequests";
 import { LoginResult } from "../model/http/responses/loginResult";
-import { validateRequest, auth as authValidation } from "../validation/auth";
+import { auth as authValidation } from "../validation/auth";
 import { ClientError } from "../Exceptions/clientErrors";
+import { validateRequest } from "../validation/validation";
 
 const TokenKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCGJS+6HbYvOCR8186CXHHqlg9o/Txhlo0dsAfHDw258wAKSuuOELsCCUyPakWKStKzF5D/NGtl7VpvfAG/7s9oBAlaXyO//s4SznsttaanmvGLDj1kuJpqEi/J55GzWGprPXQrWCmUDGxE+pDci6yMdqSjVJh0Xq+HKzCven4YuwIDAQAB'
 
 @Route("api/v1/auth/")
 export class AuthController {
+    
     @Post("/sign-in")
     public async signIn(@Body() body: ISignInPayload): Promise<BaseResponse<LoginResult>> {
 
