@@ -5,7 +5,7 @@ import { BaseResponse, ReponseHelper } from "../model/http/responses/reponseHelp
 import { dataSourceLazy } from "../repository/psqlClient";
 import { CategoryInfo } from "../repository/model/categoryInfo";
 
-@Route("/v1/category/")
+@Route("api/v1/category/")
 export class CategoryController {
     @Post("/create")
     public async create(@Body() body: ICreateCategoryRequest): Promise<BaseResponse<string>> {

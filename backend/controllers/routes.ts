@@ -190,7 +190,7 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/v1/category/create',
+        app.post('/api/v1/category/create',
 
             function CategoryController_create(request: any, response: any, next: any) {
             const args = {
@@ -213,7 +213,7 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/v1/category/list',
+        app.post('/api/v1/category/list',
 
             function CategoryController_list(request: any, response: any, next: any) {
             const args = {
