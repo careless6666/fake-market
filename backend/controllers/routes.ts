@@ -141,18 +141,10 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ProductItems": {
+    "BaseResponse_ProductItem-Array_": {
         "dataType": "refObject",
         "properties": {
-            "items": {"dataType":"array","array":{"dataType":"refObject","ref":"ProductItem"},"required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "BaseResponse_ProductItems_": {
-        "dataType": "refObject",
-        "properties": {
-            "data": {"dataType":"union","subSchemas":[{"ref":"ProductItems"},{"dataType":"enum","enums":[null]}],"required":true},
+            "data": {"dataType":"union","subSchemas":[{"dataType":"array","array":{"dataType":"refObject","ref":"ProductItem"}},{"dataType":"enum","enums":[null]}],"required":true},
             "error": {"dataType":"union","subSchemas":[{"ref":"Error"},{"dataType":"enum","enums":[null]}],"required":true},
         },
         "additionalProperties": false,
@@ -164,8 +156,8 @@ const models: TsoaRoute.Models = {
             "id": {"dataType":"string"},
             "name": {"dataType":"string"},
             "categoryId": {"dataType":"string"},
-            "limit": {"dataType":"integer","required":true,"validators":{"isInt":{"errorMsg":"Invalid float error message."},"minimum":{"value":0}}},
-            "offset": {"dataType":"double","required":true},
+            "limit": {"dataType":"integer","default":"100","required":true,"validators":{"isInt":{"errorMsg":"Invalid int error message."},"minimum":{"value":0}}},
+            "offset": {"dataType":"integer","required":true,"validators":{"isInt":{"errorMsg":"Invalid int error message."},"minimum":{"value":0}}},
         },
         "additionalProperties": false,
     },

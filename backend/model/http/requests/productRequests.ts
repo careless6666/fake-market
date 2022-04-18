@@ -2,6 +2,7 @@ export interface IProductQueryRequest {
      
     /**
      * @optionalString
+     * @default "1"
      */
     id?: string;
     /**

@@ -33,7 +33,7 @@ export class ProductService {
 
             if(searchQuery?.name && searchQuery?.name?.length > 0){
                 query.name = searchQuery.name;
-                linqQuery = linqQuery.where(`${this._tableName}.name = '${searchQuery?.name}'`)
+                linqQuery = linqQuery.where(`${this._tableName}.name ilike '%${searchQuery?.name}%'`)
 
                 if(searchQuery?.categoryId && searchQuery?.categoryId?.length > 0){
                     query.categoryid = searchQuery.categoryId;
