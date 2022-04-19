@@ -1,11 +1,11 @@
 import { ClientError } from "../Exceptions/clientErrors";
 import { CategoryItems } from "../model/http/responses/categoryResponses";
 import { CategoryInfo } from "../repository/model/categoryInfo";
-import { dataSourceLazy } from "../repository/psqlClient";
+import { AppDataSource } from "../repository/psqlClient";
 
 export class CategoryService {
   public create = async (newCategoryName: string): Promise<string> => {
-    var ds = await dataSourceLazy().initialize();
+    var ds = AppDataSource;
 
     try {
       const categoriesInfo = await ds.getRepository(CategoryInfo).findBy({
@@ -31,31 +31,27 @@ export class CategoryService {
   };
 
   public list = async (): Promise<CategoryItems> => {
-    var ds = await dataSourceLazy().initialize();
+    var ds = AppDataSource;
 
     var result = {} as CategoryItems;
 
-    try {
-      const categoriesInfo = await ds.getRepository(CategoryInfo).find();
+    const categoriesInfo = await ds.getRepository(CategoryInfo).find();
 
-      if (!categoriesInfo) {
-        return result;
-      }
-
-      var result = {
-        items: categoriesInfo.map((item: CategoryInfo) => {
-          return {
-            id: item.id,
-            name: item.name,
-            image: item.image,
-            alias: item.alias,
-          };
-        }),
-      } as CategoryItems;
-
+    if (!categoriesInfo) {
       return result;
-    } finally {
-      await ds.destroy();
     }
+
+    var result = {
+      items: categoriesInfo.map((item: CategoryInfo) => {
+        return {
+          id: item.id,
+          name: item.name,
+          image: item.image,
+          alias: item.alias,
+        };
+      }),
+    } as CategoryItems;
+
+    return result;
   };
 }

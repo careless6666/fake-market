@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {UserInfo} from "./model/UserInfo";
+import { UserInfo } from "./model/UserInfo";
 import { DataSource, DataSourceOptions } from "typeorm";
 import { CategoryInfo } from "./model/categoryInfo";
 import { CartInfo, CartItemsInfo } from "./model/cartInfo";
@@ -8,29 +8,33 @@ import { PaymentInfo } from "./model/paymentInfo";
 import { ProductInfo } from "./model/productInfo";
 import { StockInfo } from "./model/stockInfo";
 
-let _dataSource: DataSource | undefined = undefined;
+export const AppDataSource = new DataSource({
+  name: "postgres",
+  type: "postgres",
+  host: "localhost",
+  port: 1586,
+  username: "postgres",
+  password: "mysecretpassword",
+  database: "fakeDb",
+  migrationsRun: false,
+  logging: true,
+  synchronize: false,
+  entities: [
+    UserInfo,
+    CategoryInfo,
+    CartInfo,
+    CartItemsInfo,
+    CategoryInfo,
+    OrderInfo,
+    OrderItemInfo,
+    PaymentInfo,
+    ProductInfo,
+    StockInfo,
+  ],
+});
 
-const getDataSource = (): DataSource => {
-
-    const options: DataSourceOptions = {
-        name: "postgres",
-        type: "postgres",
-        host: 'localhost',
-        port: 1586,
-        username: 'postgres',
-        password: 'mysecretpassword',
-        database: 'fakeDb',
-        migrationsRun: false,
-        logging: true,
-        synchronize: false,
-        entities: [UserInfo, CategoryInfo, CartInfo, CartItemsInfo, CategoryInfo, OrderInfo, OrderItemInfo, PaymentInfo, ProductInfo, StockInfo],
-    }
-
-    if(!_dataSource){
-        _dataSource = new DataSource(options)
-    }
-
-    return _dataSource;
-}
-
-export const dataSourceLazy = getDataSource
+AppDataSource.initialize()
+  .then(() => {
+    // here you can start to work with your database
+  })
+  .catch((error) => console.log(error));

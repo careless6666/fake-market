@@ -473,7 +473,7 @@
 				"parameters": []
 			}
 		},
-		"/v1/product/query": {
+		"/api/v1/product/query": {
 			"post": {
 				"operationId": "Create",
 				"responses": {

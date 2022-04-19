@@ -31,10 +31,15 @@ export class CategoryController {
 
   @Get("/list")
   public async list(): Promise<BaseResponse<CategoryItems>> {
-    var result = {} as CategoryItems;
+    try {
+      var result = {} as CategoryItems;
 
-    var result = await this._categoryService.list();
+      var result = await this._categoryService.list();
 
-    return ReponseHelper.createSuccess<CategoryItems>(result);
+      return ReponseHelper.createSuccess<CategoryItems>(result);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 }
